@@ -3,6 +3,46 @@ Partie 8 : Les jointures
 Toutes les tables à utiliser sont dans le fichier bdd.sql
 */
 
+/*CORRECTION */
+/*Exo 1 :*/
+
+SELECT languages.name, frameworks.name
+FROM `languages`
+LEFT JOIN `frameworks`
+ON frameworks.languagesId = languages.id;
+
+
+/*Exo 2 :*/
+
+SELECT languages.name, frameworks.name
+FROM `languages`
+INNER JOIN `frameworks`
+ON frameworks.languagesId = languages.id;
+
+/*Exo 3 :   */
+SELECT COUNT(frameworks.name) AS frameworks
+  FROM `languages`
+  INNER JOIN `frameworks`
+  ON frameworks.languagesId = languages.id
+  --point commun entre les deux tables,  frameworks.languagesId = clé étrangére
+  GROUP BY languages.name;
+--GROUP BY ne peut pas etre utiliser avec un WHERE
+-- Regrouper les langages similaires
+
+
+/*Exo 4 :*/
+
+SELECT languages.name,COUNT(frameworks.name) AS `moreThreeFrameworks`
+FROM `languages`
+INNER JOIN `frameworks`
+ON frameworks.languagesId = languages.id
+GROUP BY languages.name
+HAVING `moreThreeFrameworks` > 3;
+--Cela permet donc de SÉLECTIONNER les colonnes DE la table “nom_table” en GROUPANT
+--les lignes qui ont des valeurs identiques sur la colonne “colonne1” et que la condition
+--de HAVING soit respectée.
+/*
+
 /*
 Exercice 1
 Afficher tous les frameworks associés à leurs langages. Si un langage n'a pas de framework l'afficher aussi.
@@ -102,3 +142,61 @@ SELECT *
 Exercice 3
 Afficher le nombre de framework qu'a un langage.
 */
+SELECT languages.name, COUNT(frameworks.name) FROM frameworks INNER JOIN languages ON frameworks.languagesId = languages.id
++------------+------------------------+
+| name       | COUNT(frameworks.name) |
++------------+------------------------+
+| C#         |                      1 |
+| C++        |                      1 |
+| CSS        |                     11 |
+| Java       |                      1 |
+| JavaScript |                      6 |
+| PHP        |                      8 |
+| Python     |                      1 |
+| Ruby       |                      1 |
+| VB         |                      1 |
++------------+------------------------+
+9 rows in set (0.00 sec)
+
+/*ou */
+
+SELECT languages.name, COUNT(frameworks.name)
+FROM frameworks
+INNER JOIN languages
+ON frameworks.languagesId = languages.id
+GROUP BY languages.name;
++------------+------------------------+
+| name       | COUNT(frameworks.name) |
++------------+------------------------+
+| C#         |                      1 |
+| C++        |                      1 |
+| CSS        |                     11 |
+| Java       |                      1 |
+| JavaScript |                      6 |
+| PHP        |                      8 |
+| Python     |                      1 |
+| Ruby       |                      1 |
+| VB         |                      1 |
++------------+------------------------+
+9 rows in set (0.00 sec)
+
+
+/*
+Exercice 4
+Afficher les langages ayant plus de 3 frameworks.
+*/
+SELECT COUNT(frameworks.name)
+FROM frameworks
+INNER JOIN languages
+ON frameworks.languagesId = languages.id
+GROUP BY languages.name
+HAVING COUNT(frameworks.name) > 3;
+
++------------------------+
+| COUNT(frameworks.name) |
++------------------------+
+|                     11 |
+|                      6 |
+|                      8 |
++------------------------+
+3 rows in set (0.00 sec)

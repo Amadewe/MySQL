@@ -21,11 +21,11 @@ SELECT `language`, `version`
 
 /*
 Exercice 2
-Dans la table languages, afficher toutes les versions de PHP.
+Dans la table languages, afficher toutes les versions de Javascript.
 */
-SELECT *
-  FROM languages
-  WHERE language='Javascript';
+SELECT `language`, `version`
+  FROM `languages`
+  WHERE `language`='Javascript';
 +----+------------+-----------+
 | id | language   | version   |
 +----+------------+-----------+
@@ -40,9 +40,14 @@ SELECT *
 Exercice 3
 Dans la table languages, afficher toutes les versions de PHP et de JavaScript.
 */
-SELECT *
-  FROM languages
-  WHERE language='Javascript' || language='PHP';
+SELECT `language`, `version`
+  FROM `languages`
+  WHERE `language`='Javascript' OR language='PHP';
+
+/*ou */
+  SELECT `language`, `version`
+    FROM `languages`
+    WHERE `language` IN ('PHP', 'JavaScript');
 +----+------------+-------------+
 | id | language   | version     |
 +----+------------+-------------+
@@ -60,9 +65,15 @@ SELECT *
 Exercice 4
 Dans la table languages, afficher toutes les lignes ayant pour id 3,5,7.
 */
-SELECT *
-  FROM languages
-  WHERE id='3' || id='5' || id='7';
+SELECT `id`, `language`, `version`
+  FROM `languages`
+  WHERE `id`=3 OR `id`=5 OR `id`=7;
+
+  /*ou*/
+
+  SELECT `id`, `language`, `version`
+    FROM `languages`
+    WHERE `id` IN (3, 5, 7);
 +----+------------+-------------+
 | id | language   | version     |
 +----+------------+-------------+
@@ -76,15 +87,16 @@ SELECT *
 Exercice 5
 Dans la table languages,afficher les deux première entrées de JavaScript.
 */
-SELECT *
-  FROM languages
-  ORDER BY id
+SELECT `id`, `language`, `version`
+  FROM `languages`
+  ORDER BY `id`
+  WHERE `langage` = 'Javascript'
   LIMIT 2;
   +----+------------+-------------+
   | id | language   | version     |
   +----+------------+-------------+
   |  1 | Javascript | version 5   |
-  |  2 | PHP        | version 5.2 |
+  |  5 | JavaScript | version 6   |
   +----+------------+-------------+
   2 rows in set (0.03 sec)
 
@@ -92,9 +104,9 @@ SELECT *
   Exercice 6
   Dans la table languages, afficher toutes les lignes qui ne sont pas du PHP
   */
-  SELECT *
-    FROM languages
-    WHERE language <> 'PHP';
+  SELECT `id`, `language`, `version`
+    FROM `languages`
+    WHERE `language` <> 'PHP';
     +----+------------+-------------+
     | id | language   | version     |
     +----+------------+-------------+
@@ -106,13 +118,17 @@ SELECT *
     +----+------------+-------------+
     5 rows in set (0.00 sec)
 
+/*SI on veut ne pas afficher deux choses*/
+    SELECT `language`
+      FROM `languages`
+      WHERE `language` <> 'PHP' AND `language` <> 'JavaScript';
 /*
 Exercice 7
 Dans la table languages,afficher toutes les données par ordre alphabétique.
 */
-SELECT *
-  FROM languages
-  ORDER BY language ASC;
+SELECT `id`, `language`, `version`
+  FROM `languages`
+  ORDER BY `language` ASC;
   +----+------------+-------------+
   | id | language   | version     |
   +----+------------+-------------+

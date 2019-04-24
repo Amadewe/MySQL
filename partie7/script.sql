@@ -3,9 +3,9 @@
 Exercice 1
 Dans la table languages, supprimer toutes les lignes parlant de HTML.
 */
-DELETE FROM languages
-WHERE language = 'HTML';
-
+DELETE FROM languagesWHERE name LIKE '%HTML%';
+/* ou */
+DELETE FROM languagesWHERE id = 8;
 /*
 Exercice 2
 Dans la table frameworks, modifier toutes les lignes ayant le framework Symfony par Symfony2.
@@ -34,6 +34,8 @@ Dans la table languages, modifier la ligne du langage JavaScript version 5 par l
 mysql> UPDATE languages
     -> SET version='version 5.1'
     -> WHERE version='version 5';
+/*Correction*/
+    UPDATE languages SET version='version 5' WHERE version='version 5.1' AND language='Javascript';
 Query OK, 1 row affected (0.07 sec)
 Rows matched: 1  Changed: 1  Warnings: 0
 
